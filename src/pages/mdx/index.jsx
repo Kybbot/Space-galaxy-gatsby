@@ -4,12 +4,12 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image";
 
 import { Layout } from "../../components";
 
-const Markdow = ({ data }) => {
-	const articles = data.allMarkdownRemark.nodes;
+const Mdx = ({ data }) => {
+	const articles = data.allMdx.nodes;
 
 	return (
 		<Layout>
-			<h1>Markdown page</h1>
+			<h1>MDX page</h1>
 			{articles &&
 				articles.map((article) => {
 					const image = getImage(article.frontmatter.img);
@@ -19,7 +19,7 @@ const Markdow = ({ data }) => {
 							<h2>{article.frontmatter.title}</h2>
 							<GatsbyImage image={image} alt={article.frontmatter.title} />
 							<p>{article.frontmatter.date}</p>
-							<Link to={`/markdown/${article.frontmatter.slug}`}>Go to article</Link>
+							<Link to={`/mdx/${article.frontmatter.slug}`}>Go to article</Link>
 						</article>
 					);
 				})}
@@ -28,23 +28,23 @@ const Markdow = ({ data }) => {
 };
 
 export const query = graphql`
-	query GetAllMarkdownArticles {
-		allMarkdownRemark {
+	query GetAllMdxPosts {
+		allMdx(sort: { fields: frontmatter___date, order: DESC }) {
 			nodes {
 				id
 				frontmatter {
 					title
-					date
-					slug
 					img {
 						childImageSharp {
-							gatsbyImageData(width: 400, placeholder: BLURRED, formats: [AUTO, WEBP, AVIF])
+							gatsbyImageData(width: 400)
 						}
 					}
+					date
+					slug
 				}
 			}
 		}
 	}
 `;
 
-export default Markdow;
+export default Mdx;

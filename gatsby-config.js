@@ -8,6 +8,7 @@ module.exports = {
 		`gatsby-plugin-sharp`,
 		`gatsby-transformer-sharp`,
 		`gatsby-plugin-react-helmet`,
+		`gatsby-remark-images`,
 		{
 			resolve: `gatsby-transformer-remark`,
 			options: {
@@ -23,10 +24,31 @@ module.exports = {
 			},
 		},
 		{
+			resolve: `gatsby-plugin-mdx`,
+			options: {
+				gatsbyRemarkPlugins: [
+					{
+						resolve: `gatsby-remark-images`,
+						options: {
+							maxWidth: 800,
+							linkImagesToOriginal: false,
+						},
+					},
+				],
+			},
+		},
+		{
 			resolve: `gatsby-source-filesystem`,
 			options: {
 				name: `markdown`,
 				path: `${__dirname}/src/data/markdownBlog`,
+			},
+		},
+		{
+			resolve: `gatsby-source-filesystem`,
+			options: {
+				name: `mdx`,
+				path: `${__dirname}/src/data/mdxBlog`,
 			},
 		},
 		{
